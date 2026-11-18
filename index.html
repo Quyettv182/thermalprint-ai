@@ -6,48 +6,74 @@
 <title>ThermalPrint AI — Thermal Risk Simulation & G-code Optimization for 3D Printing</title>
 <meta name="description" content="ThermalPrint AI predicts thermal failure risk before a 3D print starts, auto-repairs meshes, and optimizes G-code for speed, strength, and surface quality.">
 <style>
+  /* Semantic color tokens generated with the thiet_ke_mau skill (Astryx OKLCH recipe).
+     Brand ramp from seed #FF5A3C, cool neutral ramp from seed #83898F.
+     Light is the default theme; dark values apply under prefers-color-scheme: dark.
+     All primary text/background pairs verified >= 4.5:1 with palette.mjs contrast. */
   :root{
-    --bg:#0b0e13; --panel:#12161f; --panel2:#171c28; --text:#e8ecf3; --muted:#9aa7ba;
-    --line:#232b3a; --hot:#ff5a3c; --warm:#ffb03a; --cool:#3aa0ff; --ok:#39d98a;
+    color-scheme: light dark;
+    --bg:#EEF1F5; --surface:#FFFFFF; --surface-2:#DFE3E7;
+    --text:#23262A; --muted:#4E5358; --line:#C2C7CC;
+    --accent:#D13619; --on-accent:#FFFFFF; --accent-text:#AC2104;
+    --link:#055DB2;
+    --c-assess:#055DB2; --c-repair:#177048; --c-enhance:#855010;
+    --st-done:#177048; --st-now:#855010; --st-next:#055DB2;
+    --heat-1:#2877D1; --heat-2:#1A8D5B; --heat-3:#C87E07; --heat-4:#E73B1B;
+    --grad-1:#2877D1; --grad-2:#C87E07; --grad-3:#D13619;
+    --logo-1:#D13619; --logo-2:#C87E07;
+    --header-bg:color-mix(in srgb, var(--bg) 88%, transparent);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#191C1F; --surface:#23262A; --surface-2:#2D3135;
+      --text:#EEF1F5; --muted:#A6ACB2; --line:#42474C;
+      --accent:#CC3F26; --on-accent:#FFFFFF; --accent-text:#FD836B;
+      --link:#6EAEFD;
+      --c-assess:#6EAEFD; --c-repair:#63C28F; --c-enhance:#EA9618;
+      --st-done:#63C28F; --st-now:#EA9618; --st-next:#6EAEFD;
+      --heat-1:#4792EC; --heat-2:#34A972; --heat-3:#EA9618; --heat-4:#F64E2F;
+      --grad-1:#6EAEFD; --grad-2:#EA9618; --grad-3:#FD836B;
+      --logo-1:#FD836B; --logo-2:#EA9618;
+    }
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.6}
-  a{color:var(--cool);text-decoration:none}
+  a{color:var(--link);text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,14,19,.92);backdrop-filter:blur(6px);z-index:10}
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--header-bg);backdrop-filter:blur(6px);z-index:10}
   .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
   .logo{font-weight:700;font-size:20px;letter-spacing:.2px}
-  .logo .ai{background:linear-gradient(90deg,var(--hot),var(--warm));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo .ai{background:linear-gradient(90deg,var(--logo-1),var(--logo-2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .nav nav a{color:var(--muted);margin-left:26px;font-size:15px}
   .nav nav a:hover{color:var(--text)}
   .hero{padding:84px 0 64px;text-align:left}
-  .badge{display:inline-block;border:1px solid var(--line);background:var(--panel);color:var(--warm);border-radius:999px;padding:4px 14px;font-size:13px;margin-bottom:22px}
+  .badge{display:inline-block;border:1px solid var(--line);background:var(--surface);color:var(--accent-text);border-radius:999px;padding:4px 14px;font-size:13px;margin-bottom:22px}
   h1{font-size:46px;line-height:1.15;font-weight:800;max-width:760px}
-  h1 .grad{background:linear-gradient(90deg,var(--cool),var(--warm),var(--hot));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .grad{background:linear-gradient(90deg,var(--grad-1),var(--grad-2),var(--grad-3));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{color:var(--muted);font-size:19px;max-width:680px;margin-top:20px}
   .cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
   .btn{display:inline-block;padding:12px 26px;border-radius:10px;font-weight:600;font-size:15px}
-  .btn.primary{background:linear-gradient(90deg,var(--hot),var(--warm));color:#14100c}
-  .btn.ghost{border:1px solid var(--line);color:var(--text);background:var(--panel)}
+  .btn.primary{background:var(--accent);color:var(--on-accent)}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);background:var(--surface)}
   section{padding:56px 0;border-top:1px solid var(--line)}
   h2{font-size:30px;margin-bottom:14px}
   .sub{color:var(--muted);max-width:720px;margin-bottom:34px}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
   .card h3{font-size:19px;margin-bottom:10px}
   .card p{color:var(--muted);font-size:15px}
   .card .tag{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px;display:block}
-  .t-assess{color:var(--cool)} .t-repair{color:var(--ok)} .t-enhance{color:var(--warm)}
-  .heatbar{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--cool),#39d98a,var(--warm),var(--hot));margin:26px 0 8px}
+  .t-assess{color:var(--c-assess)} .t-repair{color:var(--c-repair)} .t-enhance{color:var(--c-enhance)}
+  .heatbar{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--heat-1),var(--heat-2),var(--heat-3),var(--heat-4));margin:26px 0 8px}
   .heatlabels{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-  .step{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .step{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:22px}
   .step b{display:block;font-size:15px;margin-bottom:6px}
   .step span{color:var(--muted);font-size:14px}
   .road{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-  .phase{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
   .phase .st{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-  .done{color:var(--ok)} .now{color:var(--warm)} .next{color:var(--cool)}
+  .done{color:var(--st-done)} .now{color:var(--st-now)} .next{color:var(--st-next)}
   .phase h3{margin:8px 0 10px;font-size:19px}
   .phase p{color:var(--muted);font-size:15px}
   ul.check{list-style:none}
