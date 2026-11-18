@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThermalPrint AI — Thermal Risk Simulation & G-code Optimization for 3D Printing</title>
+<meta name="description" content="ThermalPrint AI predicts thermal failure risk before a 3D print starts, auto-repairs meshes, and optimizes G-code for speed, strength, and surface quality.">
+<style>
+  :root{
+    --bg:#0b0e13; --panel:#12161f; --panel2:#171c28; --text:#e8ecf3; --muted:#9aa7ba;
+    --line:#232b3a; --hot:#ff5a3c; --warm:#ffb03a; --cool:#3aa0ff; --ok:#39d98a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.6}
+  a{color:var(--cool);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,14,19,.92);backdrop-filter:blur(6px);z-index:10}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:700;font-size:20px;letter-spacing:.2px}
+  .logo .ai{background:linear-gradient(90deg,var(--hot),var(--warm));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav nav a{color:var(--muted);margin-left:26px;font-size:15px}
+  .nav nav a:hover{color:var(--text)}
+  .hero{padding:84px 0 64px;text-align:left}
+  .badge{display:inline-block;border:1px solid var(--line);background:var(--panel);color:var(--warm);border-radius:999px;padding:4px 14px;font-size:13px;margin-bottom:22px}
+  h1{font-size:46px;line-height:1.15;font-weight:800;max-width:760px}
+  h1 .grad{background:linear-gradient(90deg,var(--cool),var(--warm),var(--hot));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:19px;max-width:680px;margin-top:20px}
+  .cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 26px;border-radius:10px;font-weight:600;font-size:15px}
+  .btn.primary{background:linear-gradient(90deg,var(--hot),var(--warm));color:#14100c}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);background:var(--panel)}
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  h2{font-size:30px;margin-bottom:14px}
+  .sub{color:var(--muted);max-width:720px;margin-bottom:34px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .card h3{font-size:19px;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:15px}
+  .card .tag{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px;display:block}
+  .t-assess{color:var(--cool)} .t-repair{color:var(--ok)} .t-enhance{color:var(--warm)}
+  .heatbar{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--cool),#39d98a,var(--warm),var(--hot));margin:26px 0 8px}
+  .heatlabels{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .step{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .step b{display:block;font-size:15px;margin-bottom:6px}
+  .step span{color:var(--muted);font-size:14px}
+  .road{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .phase{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .phase .st{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+  .done{color:var(--ok)} .now{color:var(--warm)} .next{color:var(--cool)}
+  .phase h3{margin:8px 0 10px;font-size:19px}
+  .phase p{color:var(--muted);font-size:15px}
+  ul.check{list-style:none}
+  ul.check li{padding:8px 0;border-bottom:1px dashed var(--line);color:var(--muted);font-size:15px}
+  ul.check li b{color:var(--text)}
+  footer{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:14px}
+  @media(max-width:640px){h1{font-size:34px}.nav nav{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo">ThermalPrint <span class="ai">AI</span></div>
+    <nav>
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <span class="badge">In development — MVP phase</span>
+  <h1>Print it right the first time. <span class="grad">Know the thermal risk before you print.</span></h1>
+  <p>ThermalPrint AI is a software layer for desktop 3D printing that simulates per-layer thermal behavior, repairs broken meshes automatically, and optimizes G-code for speed, part strength, and surface quality.</p>
+  <div class="cta">
+    <a class="btn primary" href="#product">Explore the product</a>
+    <a class="btn ghost" href="#roadmap">See the roadmap</a>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap">
+    <h2>The problem: prints fail thermally, and slicers can't see it coming</h2>
+    <p class="sub">Warping, weak layer adhesion, heat creep, and surface defects are usually thermal problems. Today's slicers slice geometry — they never simulate how heat builds up and dissipates layer by layer, so users only discover the failure after hours of printing and wasted filament.</p>
+    <div class="heatbar"></div>
+    <div class="heatlabels"><span>Overcooling — weak bonding</span><span>Optimal window</span><span>Overheating — warping, sagging</span></div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <h2>Three modules, one goal: fewer failed prints</h2>
+    <p class="sub">ThermalPrint AI works as a standalone engine with post-processing adapters and a companion app for the slicers people already use — Bambu Studio, OrcaSlicer, PrusaSlicer, and Cura.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="tag t-assess">Module 1 · Assess</span>
+        <h3>Thermal simulation &amp; TQI heatmap</h3>
+        <p>Per-layer thermal simulation over your G-code and material profile, visualized as a heatmap with a single Thermal Quality Index (TQI) score — red zones overheat, blue zones overcool, before a single gram of filament is spent.</p>
+      </div>
+      <div class="card">
+        <span class="tag t-repair">Module 2 · Repair</span>
+        <h3>Automatic mesh repair</h3>
+        <p>Hole closing, flipped-normal correction, and non-manifold edge repair with a per-error report — and a clean refusal when a mesh cannot be saved, instead of a silently broken print.</p>
+      </div>
+      <div class="card">
+        <span class="tag t-enhance">Module 3 · Enhance</span>
+        <h3>Dynamic G-code optimization</h3>
+        <p>Flow–temperature compensation that raises nozzle temperature when volumetric flow spikes, adaptive cooling for overhangs and layer bonding, and arc fitting that shrinks files and smooths toolpaths.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">No new slicer to learn. ThermalPrint AI plugs into the workflow you already have.</p>
+    <div class="steps">
+      <div class="step"><b>1 · Slice as usual</b><span>Export G-code (or .gcode.3mf) from Bambu Studio, OrcaSlicer, PrusaSlicer, or Cura.</span></div>
+      <div class="step"><b>2 · Assess</b><span>The engine simulates thermal behavior per layer and returns a TQI heatmap plus a mesh-repair report.</span></div>
+      <div class="step"><b>3 · Enhance</b><span>Parameters are rewritten — temperature, cooling, feedrate, arcs — for your goal: Max Speed, Max Strength, or High-Gloss.</span></div>
+      <div class="step"><b>4 · Print with confidence</b><span>Send the optimized file to the printer, with the risk already engineered out.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="status">
+  <div class="wrap">
+    <h2>Built in the open, verified by tests</h2>
+    <p class="sub">We report only what we have measured. Current engineering status:</p>
+    <ul class="check">
+      <li><b>36 / 36 automated tests passing</b> across the proof-of-concept and MVP modules, independently re-run.</li>
+      <li><b>Material profile system</b> for PLA, PETG, ABS, PC, and TPU — reference-based today, measured calibration in progress.</li>
+      <li><b>Bambu Studio integration</b> via the standard post-processing contract, including .gcode.3mf read/write.</li>
+      <li><b>Clean IP position</b> — permissively licensed components only; core algorithms implemented in-house.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <h2>Roadmap</h2>
+    <p class="sub">Three phases from proof-of-concept to commercial release.</p>
+    <div class="road">
+      <div class="phase">
+        <span class="st done">Phase 1 · Complete</span>
+        <h3>Proof of concept</h3>
+        <p>Standalone engine: arc fitting, thermal model, TQI heatmap, mesh repair — verified end to end.</p>
+      </div>
+      <div class="phase">
+        <span class="st now">Phase 2 · In progress</span>
+        <h3>MVP</h3>
+        <p>Assess + Repair packaged for Bambu Studio / OrcaSlicer, measured material calibration, on-machine validation.</p>
+      </div>
+      <div class="phase">
+        <span class="st next">Phase 3 · Planned</span>
+        <h3>Commercial release</h3>
+        <p>Cloud Enhance module with GPU-accelerated voxel thermal simulation and ML failure-risk prediction, subscription plans, expanded material library.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <p><b style="color:var(--text)">ThermalPrint AI</b> — thermal risk simulation and G-code optimization for desktop 3D printing.</p>
+    <p style="margin-top:8px">Company: [LEGAL COMPANY NAME], Vietnam · Contact: [CONTACT EMAIL]</p>
+    <p style="margin-top:8px">© 2026 [LEGAL COMPANY NAME]. All rights reserved.</p>
+  </div>
+</footer>
+</body>
+</html>
